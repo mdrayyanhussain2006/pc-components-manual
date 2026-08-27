@@ -1,0 +1,981 @@
+{
+  "version": 3,
+  "units": "meters",
+  "world_axes": "Z up; case front = -Y; glass side / extraction direction = -X",
+  "rules": [
+    "CPU_COOLER_OUT must complete and settle before CPU_OUT starts",
+    "Motherboard riders (CPU, CPU_COOLER, RAM_01-04, M2_SSD, GPU) travel with MOTHERBOARD_OUT",
+    "FINAL_EXPLODE parks parts along their own extraction axes (organized, readable)",
+    "'removal' = physical disengagement path (ordered primitives); 'presentation' = organized educational park pose. Related but not identical.",
+    "REV 3.1 (Step 4B collision-driven): GPU added as board rider — the board's -X extraction corridor passes through the GPU's footprint, so the card must travel plugged-in and disengage from the parked board at GPU_OUT (relative -0.17). GPU final park moved to -0.55: parks at -0.30/-0.45 lie inside the board's sweep corridor and are unreachable without crossing the board. Stage order unchanged.",
+    "REV 3.2 (Step 4B collision sweep, geometry frozen): (a) MOTHERBOARD_OUT = lift 0.012 off standoffs, then -X 0.38 slide, settle to Z 0 — a pure -X slide clips the mounted STORAGE top (Z 0.099) near X -0.055. (b) OPEN_CASE panel parks at (-0.30, +0.45, 0): a Y-0 park sits inside the GPU/RAM/cooler extraction corridor; panel final explode (-0.44, 0.45, 0). (c) STORAGE_OUT = +Y 0.03 sled slide, then +Z 0.15 lift — the straight lift clips the front fans' corner Y band. (d) PSU final explode (0, 0.65, 0): a pure +Y slide at floor Z never crosses the rear fan plane, unlike the old (0,0.50,0.30) climb.",
+    "REV 3.3 (Step 4B sweep): MOTHERBOARD_OUT adds a -Y 0.01 swing between the standoff lift and the -X slide — the board's rear edge (Y max 0.183) interlocks 4 mm with the rear exhaust fan frame (Y min 0.179); the board swings clear, slides, and settles back to Y/Z 0 at park.",
+    "REV 3.4 (cable pass-through fix, animation-only): the three power-cable disconnects are an explicit mechanical sub-sequence INSIDE MOTHERBOARD_OUT (not a new public stage). Order: release beat -> CABLE_24PIN disengage+clear -> CABLE_CPU_POWER disengage+clear -> CABLE_GPU_POWER disengage+clear -> all three clear the board+GPU extraction corridor -> THEN the board lift/swing/slide. Each connector clears before its host's main extraction and never recontacts it. PSU-side ends stay mated until SECONDARY_OUT. Stage order, names, parks and FINAL_EXPLODE unchanged."
+  ],
+  "motion_layers": {
+    "removal": "realistic mechanical path a technician follows (unscrew/unclip implied, motion primitives explicit)",
+    "presentation": "staging offsets used for previews and the educational exploded assembly"
+  },
+  "primitive_types": [
+    "translate",
+    "pivot"
+  ],
+  "stages": [
+    {
+      "i": 1,
+      "id": "OPEN_CASE",
+      "objects": [
+        "CASE_SIDE_PANEL"
+      ],
+      "axis": [
+        -1,
+        0,
+        0
+      ],
+      "dist": 0.3,
+      "removal": {
+        "CASE_SIDE_PANEL": [
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.03,
+            "note": "slide rearward off thumbscrews"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.27,
+            "note": "lift away from case"
+          }
+        ]
+      },
+      "presentation": {
+        "CASE_SIDE_PANEL": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.3,
+          "set_aside": [
+            0,
+            0.45,
+            0
+          ],
+          "note": "REV 3.2: after the -0.30 lift-away, set the panel +0.45 Y so it never sits inside the GPU/RAM/cooler extraction corridor"
+        }
+      }
+    },
+    {
+      "i": 2,
+      "id": "MOTHERBOARD_OUT",
+      "objects": [
+        "MOTHERBOARD"
+      ],
+      "riders": [
+        "CPU",
+        "CPU_COOLER",
+        "RAM_01",
+        "RAM_02",
+        "RAM_03",
+        "RAM_04",
+        "M2_SSD",
+        "GPU"
+      ],
+      "axis": [
+        -1,
+        0,
+        0
+      ],
+      "dist": 0.38,
+      "disconnect": {
+        "note": "REV 3.4: power-cable disconnect sub-sequence; completes before the first MOTHERBOARD removal primitive (standoff lift). Connector children get local keys and the cable curves flex via keyed bezier points; PSU-side connectors stay mated.",
+        "order": [
+          "CABLE_24PIN",
+          "CABLE_CPU_POWER",
+          "CABLE_GPU_POWER"
+        ],
+        "clears_before": "MOTHERBOARD removal primitive 1 (lift 0.012 off standoffs)",
+        "no_recontact": "once a connector is clear, it never re-engages its departed host",
+        "cables": {
+          "CABLE_24PIN": {
+            "connector": "CABLE_24PIN_CONN_MB",
+            "host": "MOTHERBOARD",
+            "primitives": [
+              {
+                "type": "translate",
+                "axis": [
+                  -1,
+                  0,
+                  0
+                ],
+                "dist": 0.004,
+                "note": "micro disengage from the 24-pin board socket"
+              },
+              {
+                "type": "translate",
+                "axis": [
+                  0,
+                  -1,
+                  0
+                ],
+                "dist": 0.086,
+                "note": "route forward (-Y) out of the board/GPU extraction corridor (margin keeps it clear of the board's -Y swing)"
+              },
+              {
+                "type": "translate",
+                "axis": [
+                  0,
+                  0,
+                  -1
+                ],
+                "dist": 0.068,
+                "note": "drop below the board underside and under the front fan frame bottom (the connector's latch corner reaches X 0.053, past its AABB)"
+              }
+            ]
+          },
+          "CABLE_CPU_POWER": {
+            "connector": "CABLE_CPU_POWER_CONN_MB",
+            "host": "MOTHERBOARD",
+            "primitives": [
+              {
+                "type": "translate",
+                "axis": [
+                  -1,
+                  0,
+                  0
+                ],
+                "dist": 0.02,
+                "note": "micro disengage from the CPU/EPS socket"
+              },
+              {
+                "type": "translate",
+                "axis": [
+                  0,
+                  0,
+                  1
+                ],
+                "dist": 0.033,
+                "note": "lift above board top (+standoff lift margin) so the slide passes under"
+              }
+            ]
+          },
+          "CABLE_GPU_POWER": {
+            "connector": "CABLE_GPU_POWER_CONN_GPU",
+            "host": "GPU",
+            "primitives": [
+              {
+                "type": "translate",
+                "axis": [
+                  0,
+                  0,
+                  1
+                ],
+                "dist": 0.02,
+                "note": "micro disengage from the GPU power socket"
+              },
+              {
+                "type": "translate",
+                "axis": [
+                  0,
+                  1,
+                  0
+                ],
+                "dist": 0.076,
+                "note": "route rearward (+Y) past the board rear edge, clear of the riding GPU"
+              }
+            ]
+          }
+        }
+      },
+      "removal": {
+        "MOTHERBOARD": [
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              0,
+              1
+            ],
+            "dist": 0.012,
+            "note": "REV 3.2: lift clear of standoffs first (a pure -X slide clips STORAGE top Z 0.099)"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              -1,
+              0
+            ],
+            "dist": 0.01,
+            "note": "REV 3.3: swing clear of the rear exhaust fan corner (board Y max 0.183 vs fan frame Y min 0.179) before sliding"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.38,
+            "note": "slide board (with riders) clear, settle back to Y/Z 0 at park"
+          }
+        ]
+      },
+      "presentation": {
+        "MOTHERBOARD": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.38
+        }
+      }
+    },
+    {
+      "i": 3,
+      "id": "CPU_COOLER_OUT",
+      "objects": [
+        "CPU_COOLER"
+      ],
+      "axis": [
+        -1,
+        0,
+        0
+      ],
+      "dist": 0.3,
+      "settle": true,
+      "removal": {
+        "CPU_COOLER": [
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.3,
+            "note": "lift after clip/screw release"
+          }
+        ]
+      },
+      "presentation": {
+        "CPU_COOLER": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.3
+        }
+      }
+    },
+    {
+      "i": 4,
+      "id": "CPU_OUT",
+      "objects": [
+        "CPU"
+      ],
+      "axis": [
+        -1,
+        0,
+        0
+      ],
+      "dist": 0.22,
+      "settle": true,
+      "removal": {
+        "CPU": [
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.22,
+            "note": "lift straight out after retention lever opens"
+          }
+        ]
+      },
+      "presentation": {
+        "CPU": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.22
+        }
+      }
+    },
+    {
+      "i": 5,
+      "id": "RAM_OUT",
+      "objects": [
+        "RAM_01",
+        "RAM_02",
+        "RAM_03",
+        "RAM_04"
+      ],
+      "axis": [
+        -1,
+        0,
+        0
+      ],
+      "dist": 0.25,
+      "sequential": true,
+      "removal": {
+        "RAM_01": [
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.25,
+            "note": "eject after both slot clips open"
+          }
+        ],
+        "RAM_02": [
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.25,
+            "note": "eject after both slot clips open"
+          }
+        ],
+        "RAM_03": [
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.25,
+            "note": "eject after both slot clips open"
+          }
+        ],
+        "RAM_04": [
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.25,
+            "note": "eject after both slot clips open"
+          }
+        ]
+      },
+      "presentation": {
+        "RAM_01": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.25
+        },
+        "RAM_02": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.25
+        },
+        "RAM_03": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.25
+        },
+        "RAM_04": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.25
+        }
+      }
+    },
+    {
+      "i": 6,
+      "id": "GPU_OUT",
+      "objects": [
+        "GPU"
+      ],
+      "axis": [
+        -1,
+        0,
+        0
+      ],
+      "dist": 0.17,
+      "relative_to": "MOTHERBOARD_OUT park (GPU rides the board; disengages from parked board)",
+      "removal": {
+        "GPU": [
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.01,
+            "note": "slot latch release, slight outward disengage"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.16,
+            "note": "slide clear of the parked board's PCIe slot"
+          }
+        ]
+      },
+      "presentation": {
+        "GPU": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.17
+        }
+      }
+    },
+    {
+      "i": 7,
+      "id": "STORAGE_OUT",
+      "objects": [
+        "M2_SSD",
+        "STORAGE"
+      ],
+      "per_object": {
+        "M2_SSD": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.15
+        },
+        "STORAGE": {
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "dist": 0.15
+        }
+      },
+      "removal": {
+        "M2_SSD": [
+          {
+            "type": "pivot",
+            "axis": [
+              0,
+              0,
+              1
+            ],
+            "pivot_at": "connector_edge",
+            "angle_deg": 12,
+            "note": "after standoff screw removal, stick pivots up about the connector edge"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.02,
+            "note": "disengage connector at lift angle"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.13,
+            "note": "clear the board"
+          }
+        ],
+        "STORAGE": [
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.03,
+            "note": "REV 3.2: slide +Y out of the sled (clears the front fans' corner Y band)"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              0,
+              1
+            ],
+            "dist": 0.15,
+            "note": "lift off shroud mount"
+          }
+        ]
+      },
+      "presentation": {
+        "M2_SSD": {
+          "axis": [
+            -1,
+            0,
+            0
+          ],
+          "dist": 0.15
+        },
+        "STORAGE": {
+          "axis": [
+            0,
+            0,
+            1
+          ],
+          "dist": 0.15
+        }
+      }
+    },
+    {
+      "i": 8,
+      "id": "PSU_OUT",
+      "objects": [
+        "PSU"
+      ],
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "dist": 0.4,
+      "removal": {
+        "PSU": [
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.4,
+            "note": "slide out rear after 4 case screws"
+          }
+        ]
+      },
+      "presentation": {
+        "PSU": {
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "dist": 0.4
+        }
+      }
+    },
+    {
+      "i": 9,
+      "id": "SECONDARY_OUT",
+      "objects": [
+        "CASE_FAN_01",
+        "CASE_FAN_02",
+        "CASE_FAN_03",
+        "CABLE_24PIN",
+        "CABLE_CPU_POWER",
+        "CABLE_GPU_POWER"
+      ],
+      "per_object": {
+        "CASE_FAN_01": {
+          "axis": [
+            0,
+            -1,
+            0
+          ],
+          "dist": 0.24
+        },
+        "CASE_FAN_02": {
+          "axis": [
+            0,
+            -1,
+            0
+          ],
+          "dist": 0.24
+        },
+        "CASE_FAN_03": {
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "dist": 0.4
+        },
+        "CABLE_24PIN": {
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "dist": 0.3
+        },
+        "CABLE_CPU_POWER": {
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "dist": 0.34
+        },
+        "CABLE_GPU_POWER": {
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "dist": 0.32
+        }
+      },
+      "removal": {
+        "CASE_FAN_01": [
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              -1,
+              0
+            ],
+            "dist": 0.24,
+            "note": "unbolt from front panel"
+          }
+        ],
+        "CASE_FAN_02": [
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              -1,
+              0
+            ],
+            "dist": 0.24,
+            "note": "unbolt from front panel"
+          }
+        ],
+        "CASE_FAN_03": [
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.4,
+            "note": "unbolt from rear"
+          }
+        ],
+        "CABLE_24PIN": [
+          {
+            "type": "translate",
+            "axis": [
+              -1,
+              0,
+              0
+            ],
+            "dist": 0.02,
+            "note": "REV 3.4: board side already released during MOTHERBOARD_OUT; this frees the PSU-side end"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.08,
+            "note": "REV 3.4: rise leg first — stays inboard of the unbolting fans' sweep"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.16,
+            "note": "route clear"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.06,
+            "note": "presentation settle"
+          }
+        ],
+        "CABLE_CPU_POWER": [
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              0,
+              1
+            ],
+            "dist": 0.02,
+            "note": "REV 3.4: board side already released during MOTHERBOARD_OUT; PSU end releases +Z (up-facing socket; a -X tug drags the sleeve into the rear fan's sweep)"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              0,
+              1
+            ],
+            "dist": 0.07,
+            "note": "REV 3.4: lift clear of the PSU top face before any +Y travel (plug starts embedded in the PSU top; a low +Y tug clips the parked PSU corner)"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.28,
+            "note": "route clear at lifted height"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.06,
+            "note": "presentation settle (drops the plug back onto the departed PSU top, like assembled rest)"
+          }
+        ],
+        "CABLE_GPU_POWER": [
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              0,
+              1
+            ],
+            "dist": 0.02,
+            "note": "REV 3.4: card side already released during MOTHERBOARD_OUT; this frees the PSU-side end"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.08,
+            "note": "REV 3.4: rise leg first — stays inboard of the unbolting fans' sweep"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.18,
+            "note": "route clear"
+          },
+          {
+            "type": "translate",
+            "axis": [
+              0,
+              1,
+              0
+            ],
+            "dist": 0.06,
+            "note": "presentation settle"
+          }
+        ]
+      },
+      "presentation": {
+        "CASE_FAN_01": {
+          "axis": [
+            0,
+            -1,
+            0
+          ],
+          "dist": 0.24
+        },
+        "CASE_FAN_02": {
+          "axis": [
+            0,
+            -1,
+            0
+          ],
+          "dist": 0.24
+        },
+        "CASE_FAN_03": {
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "dist": 0.4
+        },
+        "CABLE_24PIN": {
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "dist": 0.3
+        },
+        "CABLE_CPU_POWER": {
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "dist": 0.34
+        },
+        "CABLE_GPU_POWER": {
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "dist": 0.32
+        }
+      }
+    },
+    {
+      "i": 10,
+      "id": "FINAL_EXPLODE",
+      "organized": true,
+      "offsets": {
+        "CASE_SIDE_PANEL": [
+          -0.44,
+          0.45,
+          0.0
+        ],
+        "MOTHERBOARD": [
+          -0.5,
+          0.0,
+          0.0
+        ],
+        "CPU": [
+          -0.66,
+          0.0,
+          0.0
+        ],
+        "CPU_COOLER": [
+          -0.82,
+          0.0,
+          0.0
+        ],
+        "RAM_01": [
+          -0.66,
+          0.0,
+          0.02
+        ],
+        "RAM_02": [
+          -0.72,
+          0.0,
+          0.04
+        ],
+        "RAM_03": [
+          -0.78,
+          0.0,
+          0.06
+        ],
+        "RAM_04": [
+          -0.84,
+          0.0,
+          0.08
+        ],
+        "M2_SSD": [
+          -0.62,
+          0.0,
+          0.045
+        ],
+        "GPU": [
+          -0.55,
+          0.0,
+          0.0
+        ],
+        "STORAGE": [
+          -0.22,
+          0.0,
+          0.1
+        ],
+        "PSU": [
+          0.0,
+          0.65,
+          0.0
+        ],
+        "CASE_FAN_01": [
+          0.0,
+          -0.24,
+          0.0
+        ],
+        "CASE_FAN_02": [
+          0.0,
+          -0.24,
+          0.0
+        ],
+        "CASE_FAN_03": [
+          0.0,
+          0.4,
+          0.0
+        ],
+        "CABLE_24PIN": [
+          0.0,
+          0.24,
+          0.0
+        ],
+        "CABLE_CPU_POWER": [
+          0.0,
+          0.28,
+          0.0
+        ],
+        "CABLE_GPU_POWER": [
+          0.0,
+          0.26,
+          0.0
+        ]
+      }
+    }
+  ]
+}

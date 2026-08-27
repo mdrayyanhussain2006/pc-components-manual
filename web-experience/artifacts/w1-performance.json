@@ -1,0 +1,11 @@
+{
+  "environment": "Playwright headless Chrome on Windows; software/headless rendering may limit FPS",
+  "viewport": "1440x900",
+  "initialLoadMs": 602.1000000238419,
+  "steadyFps": 36.98890332856049,
+  "renderWidth": 1440,
+  "renderHeight": 900,
+  "dpr": 1,
+  "drawCalls": 137,
+  "triangles": 66878
+}

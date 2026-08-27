@@ -1,0 +1,143 @@
+================================================================
+FINAL OPTIMIZATION REPORT - pc_anatomy_web_final.glb
+EXPORT-ONLY triangle reduction + compression
+Date: 2026-08-22
+================================================================
+
+SOURCE INTEGRITY (read-only guarantee)
+----------------------------------------------------------------
+build/animated.blend      262,404 B  last modified 2026-08-22 09:47:48  UNCHANGED
+build/detail.blend        244,301 B  last modified 2026-08-21 18:41:45  UNCHANGED
+build/export/pc_anatomy_master.glb  3,538,032 B  UNTOUCHED (not re-exported)
+No Blender source geometry, material, keyframe, hierarchy, name or
+manifest (REV 3.4) was modified. The reduction pipeline opened ONLY
+the validated master GLB, never a .blend source file.
+
+PIPELINE
+----------------------------------------------------------------
+1. scripts/reduce_glb.py (Blender 5.2 headless):
+   - imports pc_anatomy_master.glb into a fresh scene (29 objects)
+   - per-material-part PLANAR decimation (DECIMATE COLLAPSE) of
+     selected meshes; each glTF primitive is decimated independently
+     and reassembled in original material-slot order, so no component
+     meshes are ever merged and primitive counts are unchanged
+   - shading normals transferred from the pre-decimate mesh
+     (DATA_TRANSFER CUSTOM_NORMAL) to keep surface shading stable
+   - geometry is rebuilt INTO the original animated objects, so every
+     AnimData block, node name, transform and parent link survives
+   - cable shape-key meshes, connectors, CPU and side panel are NOT
+     decimated (shape-key animation + small animation-relevant parts)
+   - re-exports all 29 selected nodes with identical exporter settings
+2. gltf-transform 4.4.2 optimize (conservative flags):
+   --compress meshopt --flatten false --instance false --join false
+   --palette false --simplify false --texture-compress false
+   --resample true --prune true --sparse true --weld false
+   (no lossy simplification, no node flattening, no primitive joining)
+
+GEOMETRY
+----------------------------------------------------------------
+Master triangles : 81,178
+Final triangles  : 33,383
+Reduction        : -58.87%
+Hard ceiling     : 60,000  -> PASS (44.4% headroom)
+Target band      : 15k-30k -> slightly above (33.4k); no further
+                   reduction applied because every remaining triangle
+                   sits on protected/high-priority geometry or on
+                   animation-critical cable/connector meshes.
+
+Per-mesh triangle budget (master -> final, glTF primitive count kept):
+  MOTHERBOARD    22,480 ->  6,742  (ratio 0.30, 5 prims)
+  GPU            16,276 ->  8,137  (ratio 0.50, 8 prims)
+  CPU_COOLER     10,728 ->  3,218  (ratio 0.30, 3 prims)
+  PSU             6,312 ->  3,470  (ratio 0.55, 4 prims)
+  CASE_FAN_01-03 12,000 ->  2,637  (ratio 0.22, 1 prim each)
+  CASE            3,404 ->  1,359  (ratio 0.40, 5 prims)
+  RAM_01-04       4,320 ->  3,000  (ratio 0.70, 5 prims each)
+  M2_SSD          1,028 ->    716  (ratio 0.70, 4 prims)
+  STORAGE         1,736 ->  1,212  (ratio 0.70, 3 prims)
+  CABLE_* (3)     1,920 ->  1,920  UNTOUCHED (per-frame shape keys)
+  connectors (6)    648 ->    648  UNTOUCHED (disconnect animation)
+  CPU               216 ->    216  UNTOUCHED
+  CASE_SIDE_PANEL   108 ->    108  UNTOUCHED
+
+FILE SIZE
+----------------------------------------------------------------
+Master file size : 3,538,032 B (3.54 MB)
+Final file size  :   539,272 B (539 KB)
+Reduction        : -84.76%
+
+STRUCTURE
+----------------------------------------------------------------
+Node count       : 29 (19 required + 6 connectors + 4 group roots)
+                   - all names exact, no exporter name transformation
+Mesh count       : 25 separable meshes (unchanged)
+Material count   : 17 (unchanged, all MAT_* names intact)
+Animation count  : 21 (unchanged), all spanning frames 1-974 @ 24 fps
+                   (40.542 s each) - timing identical to master
+Animation names  : PC_Disassembly_CASE_SIDE_PANEL, _CPU, _CPU_COOLER,
+                   _CASE_FAN_01/02/03, _GPU, _M2_SSD, _MOTHERBOARD,
+                   _PSU, _RAM_01/02/03/04, _STORAGE,
+                   _CABLE_24PIN_flex, _CABLE_CPU_POWER_flex,
+                   _CABLE_GPU_POWER_flex,
+                   _CABLE_24PIN_CONN_MB_disconnect,
+                   _CABLE_CPU_POWER_CONN_MB_disconnect,
+                   _CABLE_GPU_POWER_CONN_GPU_disconnect
+
+VALIDATION
+----------------------------------------------------------------
+glTF validator (gltf-transform validate):
+  errors   : 0
+  warnings : 0
+Semantic verification (scripts/verify_glb.py against the Blender
+reference pose set from the frozen source, 29 nodes x 29 frames +
+cable morph milestones):
+  checks   : 954
+  failures : 0
+  worst pose deviation vs master reference: 0.37 mm (RAM_01 @ f930)
+    -> within the 1.5 mm tolerance and consistent with meshopt float
+       quantization measured earlier (<= 0.37 mm)
+  cable disconnect morph milestones: 24PIN (140/146/158/160/974),
+    CPU_POWER (144/150/160/162/974), GPU_POWER (146/152/162/164/974)
+    all PASS - no cable, M.2, rider, cooler->CPU or FINAL_EXPLODE
+    regression
+Hierarchy checks : all 17 expected parent links PASS
+Unexpected nodes : none
+
+COMPRESSION NOTES
+----------------------------------------------------------------
+extensionsUsed    : EXT_meshopt_compression, KHR_mesh_quantization,
+                    KHR_materials_ior, KHR_materials_transmission
+extensionsRequired: EXT_meshopt_compression, KHR_mesh_quantization
+  (supported by three.js, Babylon.js, PlayCanvas and all meshopt-aware
+   glTF runtimes). A universal no-extension variant can be regenerated
+   from the same intermediate with `gltf-transform optimize
+   build/export/pc_anatomy_web_reduced.glb ... --compress false` if a
+   loader without meshopt support is ever required.
+
+ARTIFACTS
+----------------------------------------------------------------
+build/export/pc_anatomy_web_final.glb     539,272 B   (deliverable)
+build/export/web_final_validate.txt       validator output (0/0)
+build/export/web_final_inspect.txt        gltf-transform inspect
+build/export/pc_anatomy_web_reduced.glb   intermediate (pre-meshopt)
+build/export/pc_anatomy_master.glb        3,538,032 B (UNTOUCHED)
+scripts/reduce_glb.py                     export-time reduction script
+scripts/verify_glb.py                     semantic/pose verifier (reused)
+
+ACCEPTANCE CRITERIA
+----------------------------------------------------------------
+[PASS] total triangles 33,383 < 60,000
+[PASS] 29 required/logical nodes preserved, exact names
+[PASS] 25 separable meshes preserved (primitive counts identical)
+[PASS] 17 materials preserved
+[PASS] 21 animations preserved, exact names, identical 1-974 timing
+[PASS] semantic verification 0 failures; cable disconnect, M.2 motion,
+       CPU cooler -> CPU ordering, motherboard rider behavior and
+       FINAL_EXPLODE all verified against the master reference poses
+[PASS] glTF validator: 0 errors, 0 warnings
+[PASS] maximum pose deviation 0.37 mm (negligible at scene scale)
+[PASS] source assets and master GLB untouched
+
+VERDICT: ACCEPTED
+Stop here per authorization - no web integration performed.
+================================================================

@@ -1,0 +1,18 @@
+{
+  "name": "pc-anatomy-web-test",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Isolated WebGL runtime validation for pc_anatomy_web_final.glb (local only, never published)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.0"
+  }
+}

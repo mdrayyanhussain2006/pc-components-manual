@@ -1,0 +1,164 @@
+DETAIL-PASS QA REPORT (build/detail.blend)
+============================================================
+PASS taxonomy:object CASE
+PASS taxonomy:allowed CASE
+PASS taxonomy:required CASE has MAT_CHASSIS_COATED
+PASS taxonomy:object CASE_SIDE_PANEL
+PASS taxonomy:allowed CASE_SIDE_PANEL
+PASS taxonomy:required CASE_SIDE_PANEL has MAT_GLASS_TEMPERED
+PASS taxonomy:object MOTHERBOARD
+PASS taxonomy:allowed MOTHERBOARD
+PASS taxonomy:required MOTHERBOARD has MAT_PCB_MAIN
+PASS taxonomy:object CPU
+PASS taxonomy:allowed CPU
+PASS taxonomy:required CPU has MAT_CPU_NICKEL
+PASS taxonomy:required CPU has MAT_CPU_SUBSTRATE
+PASS taxonomy:object CPU_COOLER
+PASS taxonomy:allowed CPU_COOLER
+PASS taxonomy:required CPU_COOLER has MAT_ALU_HEATSINK
+PASS taxonomy:required CPU_COOLER has MAT_FAN_PLASTIC
+PASS taxonomy:object RAM_01
+PASS taxonomy:allowed RAM_01
+PASS taxonomy:required RAM_01 has MAT_PCB_MAIN
+PASS taxonomy:required RAM_01 has MAT_RAM_SPREADER
+PASS taxonomy:required RAM_01 has MAT_CONTACT_GOLD
+PASS taxonomy:object RAM_02
+PASS taxonomy:allowed RAM_02
+PASS taxonomy:required RAM_02 has MAT_PCB_MAIN
+PASS taxonomy:required RAM_02 has MAT_RAM_SPREADER
+PASS taxonomy:required RAM_02 has MAT_CONTACT_GOLD
+PASS taxonomy:object RAM_03
+PASS taxonomy:allowed RAM_03
+PASS taxonomy:required RAM_03 has MAT_PCB_MAIN
+PASS taxonomy:required RAM_03 has MAT_RAM_SPREADER
+PASS taxonomy:required RAM_03 has MAT_CONTACT_GOLD
+PASS taxonomy:object RAM_04
+PASS taxonomy:allowed RAM_04
+PASS taxonomy:required RAM_04 has MAT_PCB_MAIN
+PASS taxonomy:required RAM_04 has MAT_RAM_SPREADER
+PASS taxonomy:required RAM_04 has MAT_CONTACT_GOLD
+PASS taxonomy:object GPU
+PASS taxonomy:allowed GPU
+PASS taxonomy:required GPU has MAT_SHROUD_PLASTIC
+PASS taxonomy:required GPU has MAT_PCB_MAIN
+PASS taxonomy:required GPU has MAT_CONTACT_GOLD
+PASS taxonomy:required GPU has MAT_STEEL_ZINC
+PASS taxonomy:object M2_SSD
+PASS taxonomy:allowed M2_SSD
+PASS taxonomy:required M2_SSD has MAT_PCB_MAIN
+PASS taxonomy:object STORAGE
+PASS taxonomy:allowed STORAGE
+PASS taxonomy:required STORAGE has MAT_STORAGE_CASE
+PASS taxonomy:object PSU
+PASS taxonomy:allowed PSU
+PASS taxonomy:required PSU has MAT_PSU_COATED
+PASS taxonomy:object CASE_FAN_01
+PASS taxonomy:allowed CASE_FAN_01
+PASS taxonomy:required CASE_FAN_01 has MAT_FAN_PLASTIC
+PASS taxonomy:object CASE_FAN_02
+PASS taxonomy:allowed CASE_FAN_02
+PASS taxonomy:required CASE_FAN_02 has MAT_FAN_PLASTIC
+PASS taxonomy:object CASE_FAN_03
+PASS taxonomy:allowed CASE_FAN_03
+PASS taxonomy:required CASE_FAN_03 has MAT_FAN_PLASTIC
+PASS taxonomy:object CABLE_24PIN
+PASS taxonomy:allowed CABLE_24PIN
+PASS taxonomy:required CABLE_24PIN has MAT_CABLE_SLEEVE
+PASS taxonomy:object CABLE_CPU_POWER
+PASS taxonomy:allowed CABLE_CPU_POWER
+PASS taxonomy:required CABLE_CPU_POWER has MAT_CABLE_SLEEVE
+PASS taxonomy:object CABLE_GPU_POWER
+PASS taxonomy:allowed CABLE_GPU_POWER
+PASS taxonomy:required CABLE_GPU_POWER has MAT_CABLE_SLEEVE
+PASS taxonomy:retired MAT_CASE unassigned
+PASS taxonomy:retired MAT_GLASS unassigned
+PASS taxonomy:retired MAT_PCB unassigned
+PASS taxonomy:retired MAT_METAL unassigned
+PASS taxonomy:retired MAT_PLASTIC unassigned
+PASS taxonomy:retired MAT_GPU unassigned
+PASS taxonomy:retired MAT_PSU unassigned
+PASS taxonomy:retired MAT_RAM unassigned
+PASS taxonomy:retired MAT_STORAGE unassigned
+PASS taxonomy:retired MAT_CPU unassigned
+PASS taxonomy:retired MAT_CABLE unassigned
+PASS polycount:_Ground <= 12000
+PASS polycount:CABLE_24PIN_CONN_MB <= 12000
+PASS polycount:CABLE_24PIN_CONN_PSU <= 12000
+PASS polycount:CABLE_CPU_POWER_CONN_MB <= 12000
+PASS polycount:CABLE_CPU_POWER_CONN_PSU <= 12000
+PASS polycount:CABLE_GPU_POWER_CONN_GPU <= 12000
+PASS polycount:CABLE_GPU_POWER_CONN_PSU <= 12000
+PASS polycount:CASE <= 12000
+PASS polycount:CASE_FAN_01 <= 12000
+PASS polycount:CASE_FAN_02 <= 12000
+PASS polycount:CASE_FAN_03 <= 12000
+PASS polycount:CASE_SIDE_PANEL <= 12000
+PASS polycount:CPU <= 12000
+PASS polycount:CPU_COOLER <= 12000
+PASS polycount:GPU <= 12000
+PASS polycount:M2_SSD <= 12000
+PASS polycount:MOTHERBOARD <= 12000
+PASS polycount:PSU <= 12000
+PASS polycount:RAM_01 <= 12000
+PASS polycount:RAM_02 <= 12000
+PASS polycount:RAM_03 <= 12000
+PASS polycount:RAM_04 <= 12000
+PASS polycount:STORAGE <= 12000
+PASS polycount:total <= 60000
+PASS info:polycount within 15000-30000 realism band
+PASS manifest:scene text present
+PASS manifest:version 3
+PASS manifest:motion_layers removal+presentation
+PASS manifest:primitive_types
+PASS manifest:order cooler before cpu
+PASS manifest:removal layer OPEN_CASE
+PASS manifest:presentation layer OPEN_CASE
+PASS manifest:removal covers OPEN_CASE
+PASS manifest:primitive types OPEN_CASE:CASE_SIDE_PANEL
+PASS manifest:removal layer MOTHERBOARD_OUT
+PASS manifest:presentation layer MOTHERBOARD_OUT
+PASS manifest:removal covers MOTHERBOARD_OUT
+PASS manifest:primitive types MOTHERBOARD_OUT:MOTHERBOARD
+PASS manifest:removal layer CPU_COOLER_OUT
+PASS manifest:presentation layer CPU_COOLER_OUT
+PASS manifest:removal covers CPU_COOLER_OUT
+PASS manifest:primitive types CPU_COOLER_OUT:CPU_COOLER
+PASS manifest:removal layer CPU_OUT
+PASS manifest:presentation layer CPU_OUT
+PASS manifest:removal covers CPU_OUT
+PASS manifest:primitive types CPU_OUT:CPU
+PASS manifest:removal layer RAM_OUT
+PASS manifest:presentation layer RAM_OUT
+PASS manifest:removal covers RAM_OUT
+PASS manifest:primitive types RAM_OUT:RAM_01
+PASS manifest:primitive types RAM_OUT:RAM_02
+PASS manifest:primitive types RAM_OUT:RAM_03
+PASS manifest:primitive types RAM_OUT:RAM_04
+PASS manifest:removal layer GPU_OUT
+PASS manifest:presentation layer GPU_OUT
+PASS manifest:removal covers GPU_OUT
+PASS manifest:primitive types GPU_OUT:GPU
+PASS manifest:removal layer STORAGE_OUT
+PASS manifest:presentation layer STORAGE_OUT
+PASS manifest:removal covers STORAGE_OUT
+PASS manifest:primitive types STORAGE_OUT:M2_SSD
+PASS manifest:primitive types STORAGE_OUT:STORAGE
+PASS manifest:removal layer PSU_OUT
+PASS manifest:presentation layer PSU_OUT
+PASS manifest:removal covers PSU_OUT
+PASS manifest:primitive types PSU_OUT:PSU
+PASS manifest:removal layer SECONDARY_OUT
+PASS manifest:presentation layer SECONDARY_OUT
+PASS manifest:removal covers SECONDARY_OUT
+PASS manifest:primitive types SECONDARY_OUT:CASE_FAN_01
+PASS manifest:primitive types SECONDARY_OUT:CASE_FAN_02
+PASS manifest:primitive types SECONDARY_OUT:CASE_FAN_03
+PASS manifest:primitive types SECONDARY_OUT:CABLE_24PIN
+PASS manifest:primitive types SECONDARY_OUT:CABLE_CPU_POWER
+PASS manifest:primitive types SECONDARY_OUT:CABLE_GPU_POWER
+PASS manifest:final explode organized+offsets
+PASS manifest:m2 pivot->disengage->translate
+PASS manifest:removal != presentation (m2)
+------------------------------------------------------------
+checks: 159  failures: 0
+QA_DETAIL_RESULT: QA_PASS

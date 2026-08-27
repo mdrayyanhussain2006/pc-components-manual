@@ -1,0 +1,27 @@
+# ROOT HANDOFF INSTALLATION
+
+Copy/merge these paths into the Components-Manual root:
+
+.agents/skills/education-ux-engineer/SKILL.md
+.agents/skills/interaction-engineer/SKILL.md
+.agents/skills/lead-webgl-architect/SKILL.md
+.agents/skills/release-integrator/SKILL.md
+.agents/skills/runtime-qa-engineer/SKILL.md
+.agents/skills/visual-experience-engineer/SKILL.md
+.agents/skills/webgl-experience-review/SKILL.md
+.gitignore
+AGENTS.md
+AGENT_ROLES.md
+ANIMATION_CONTRACT.md
+ASSET_CONTRACT.md
+HANDOFF_CHECKLIST.md
+PROJECT_CONTEXT.md
+RUNTIME_HARNESS_KNOWN_ISSUES.md
+UI_UX_VISION.md
+VALIDATION_MATRIX.md
+W0_FIRST_PROMPT.md
+WEB_RUNTIME_CONTRACT.md
+ZED_AGENT_INDEX.md
+ZED_BOOTSTRAP.md
+ZED_ENVIRONMENT_POLICY.md
+ZED_SETUP.md

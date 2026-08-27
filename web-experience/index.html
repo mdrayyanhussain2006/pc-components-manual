@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#e8eaed" />
+    <meta name="description" content="Interactive 3D PC anatomy — explore every component, connection, and disassembly stage of a desktop computer." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233b6b8a'/%3E%3Cpath d='M9 8h14v16H9z' fill='none' stroke='white' stroke-width='2'/%3E%3Ccircle cx='16' cy='13' r='2.5' fill='white'/%3E%3C/svg%3E" />
+    <title>PC Anatomy — Interactive Technical Visualization</title>
+  </head>
+  <body>
+    <main id="experience" aria-label="PC anatomy 3D viewer">
+      <canvas id="experience-canvas" aria-label="Interactive 3D model of a desktop PC"></canvas>
+
+      <!-- Product UI layers (populated by JS) -->
+      <div id="ui-header-slot" class="ui-layer ui-layer--top-left"></div>
+      <div id="ui-education-slot" class="ui-layer ui-layer--side"></div>
+      <div id="ui-controls-slot" class="ui-layer ui-layer--bottom"></div>
+
+      <!-- Loading / Error overlay -->
+      <section id="runtime-status" class="status-layer" role="status" aria-live="polite">
+        <div class="status-card" data-status="loading">
+          <div class="loading-mark" aria-hidden="true"></div>
+          <p class="status-eyebrow">PC Anatomy</p>
+          <h1>Preparing the 3D model</h1>
+          <p id="status-message">Loading the technical visualization…</p>
+          <button id="retry-button" type="button" hidden>Try again</button>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

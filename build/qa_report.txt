@@ -1,0 +1,12 @@
+PC BLOCKOUT QA REPORT
+============================================================
+INFO  contact (designed): MOTHERBOARD | CPU  (753 tri pairs)
+INFO  contact (designed): MOTHERBOARD | RAM_01  (216 tri pairs)
+INFO  contact (designed): MOTHERBOARD | RAM_02  (208 tri pairs)
+INFO  contact (designed): MOTHERBOARD | RAM_03  (208 tri pairs)
+INFO  contact (designed): MOTHERBOARD | RAM_04  (208 tri pairs)
+INFO  contact (designed): MOTHERBOARD | GPU  (372 tri pairs)
+INFO  contact (designed): MOTHERBOARD | M2_SSD  (183 tri pairs)
+------------------------------------------------------------
+checks: 198  failures: 0  infos: 7
+QA_RESULT: QA_PASS

@@ -1,0 +1,64 @@
+{
+  "fps": 24,
+  "frame_start": 1,
+  "frame_end": 974,
+  "action_prefix": "PC_Disassembly",
+  "stages": [
+    {
+      "id": "ASSEMBLED",
+      "start": 1,
+      "end": 24
+    },
+    {
+      "id": "OPEN_CASE",
+      "start": 24,
+      "park": 124
+    },
+    {
+      "id": "MOTHERBOARD_OUT",
+      "start": 132,
+      "park": 222
+    },
+    {
+      "id": "CPU_COOLER_OUT",
+      "start": 230,
+      "park": 308
+    },
+    {
+      "id": "CPU_OUT",
+      "start": 316,
+      "park": 382
+    },
+    {
+      "id": "RAM_OUT",
+      "start": 390,
+      "park": 550
+    },
+    {
+      "id": "GPU_OUT",
+      "start": 558,
+      "park": 640
+    },
+    {
+      "id": "STORAGE_OUT",
+      "start": 648,
+      "park": 722
+    },
+    {
+      "id": "PSU_OUT",
+      "start": 730,
+      "park": 798
+    },
+    {
+      "id": "SECONDARY_OUT",
+      "start": 806,
+      "park": 882
+    },
+    {
+      "id": "FINAL_EXPLODE",
+      "start": 890,
+      "park": 950,
+      "end": 974
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+# Node & dependencies
+node_modules/
+dist/
+build-dist/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Test & Playwright outputs
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# OS & system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+NUL
+nul
+
+# Editor & IDE state
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+ENV/
+
+# Blender autosaves and backup files
+*.blend1
+*.blend2
+*.blend3
+*.blend@
+*.blend@@
+*.raw.glb
+
+# Local environment & secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+
+# Local transient probe outputs and logs
+build/probe*_out.txt
+build/web_optimize_out.txt
+build/final_optimize_out.txt
+build/reduce_out.txt
+build/verify_out.txt
+build/verify_final_out.txt
+build/verify_web_out.txt
+build/audit_out.txt
+build/audit_export_log.txt
+build/export_out.txt
+build/diag/
